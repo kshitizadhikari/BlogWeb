@@ -21,6 +21,14 @@ namespace BulkyBookWeb.Controllers
         //GET
         public IActionResult Create()
         {
+            List<string> categoryList = new List<string>() {
+                "Technology",
+                "Travel",
+                "Food",
+                "Fashion",
+                "Health",
+                "Lifestyle"};
+            ViewBag.categoryList = categoryList;
             return View();
         }
 
@@ -58,6 +66,16 @@ namespace BulkyBookWeb.Controllers
             {
                 return NotFound();
             }
+
+            List<string> categoryList = new List<string>() {
+                "Technology",
+                "Travel",
+                "Food",
+                "Fashion",
+                "Health",
+                "Lifestyle"};
+
+            ViewBag.categoryList = categoryList;
             return View(obj);
         }
 
