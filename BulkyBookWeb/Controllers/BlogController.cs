@@ -114,5 +114,73 @@ namespace BulkyBookWeb.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        //GET
+        public IActionResult GetBlog(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Blog? obj = _db.Blogs.Find(id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            List<string> categoryList = new List<string>() {
+                "Technology",
+                "Travel",
+                "Food",
+                "Fashion",
+                "Health",
+                "Lifestyle"};
+
+            ViewBag.categoryList = categoryList;
+            return View(obj);
+        }
+
+        [Route("blog/get-blog/{id}")]
+        public IActionResult GetBlogObj(int? id)
+        {
+            Blog? obj = _db.Blogs.Find(id);
+            return Ok(obj);
+        }
+
+        [Route("blog/get-all-blogs")]
+        public IActionResult GetAllBlogObj()
+        {
+            IEnumerable<Blog> allBlogs = _db.Blogs;
+            return Ok(allBlogs);
+        }
+
+        [HttpPost]
+        [Route("blog/create-blog")]
+        public IActionResult CreateBlogObj([FromBody] Blog obj)
+        {
+            _db.Blogs.Add(obj);
+            _db.SaveChanges();
+            return Ok(obj);
+        }
+
+        [HttpPut]
+        [Route("blog/update-blog")]
+        public IActionResult UpdateBlogObj([FromBody] Blog obj)
+        {
+            _db.Blogs.Update(obj);
+            _db.SaveChanges();
+            return Ok(obj);
+        }
+
+        [HttpDelete]
+        [Route("blog/delete-blog/{id}")]
+        public IActionResult DeleteBlogObj(int? id)
+        {
+            Blog? obj = _db.Blogs.Find(id);
+            _db.Blogs.Remove(obj);
+            _db.SaveChanges();
+            return Ok();
+        }
     }
 }
